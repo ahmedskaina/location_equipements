@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des catégories</title>
+</head>
+
+<body>
+
+    <h1>Liste des catégories d'équipement</h1>
+
+    <?php if (empty($categories)): ?>
+
+        <p>Aucune catégorie disponible.</p>
+
+    <?php else: ?>
+
+        <table border="1" cellpadding="10">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <?php foreach ($categories as $categorie): ?>
+
+                    <tr>
+                        <td>
+                            <?= htmlspecialchars($categorie['id_categorie']) ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($categorie['nom']) ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($categorie['description'] ?? '') ?>
+                        </td>
+                    </tr>
+
+                <?php endforeach; ?>
+
+            </tbody>
+
+        </table>
+
+    <?php endif; ?>
+
+</body>
+
+</html>
