@@ -17,4 +17,32 @@ class CategorieController
 
         require __DIR__ . '/../views/categories/index.php';
     }
+
+    public function create(): void
+    {
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $nom = trim($_POST['nom'] ?? '');
+            $description = trim($_POST['description'] ?? '');
+
+            if ($nom === '') {
+                $errors[] = "Le nom est obligatoire.";
+            }
+
+            if (strlen($nom) < 3) {
+                $errors[] = "Le nom doit contenir au moins 3 caractères.";
+            }
+
+            if (empty($errors)) {
+                $this->model->create($nom, $description);
+
+                header('Location: index.php?action=categories');
+                exit;
+            }
+        }
+
+        require __DIR__ . '/../views/categories/create.php';
+    }
 }
