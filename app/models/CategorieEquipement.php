@@ -32,4 +32,37 @@ class CategorieEquipement
             ':description' => $description
         ]);
     }
+    public function getById(int $id): array|false
+{
+    $sql = "SELECT *
+            FROM categorie_equipement
+            WHERE id_categorie = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id' => $id
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function update(
+    int $id,
+    string $nom,
+    string $description
+): bool {
+    $sql = "UPDATE categorie_equipement
+            SET nom = :nom,
+                description = :description
+            WHERE id_categorie = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':nom' => $nom,
+        ':description' => $description,
+        ':id' => $id
+    ]);
+}
+
 }

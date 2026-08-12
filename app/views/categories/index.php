@@ -28,6 +28,7 @@
                     <th>ID</th>
                     <th>Nom</th>
                     <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -46,6 +47,11 @@
 
                         <td>
                             <?= htmlspecialchars($categorie['description'] ?? '') ?>
+                        </td>
+                        <td>
+                            <a href="index.php?action=edit-category&id=<?= $categorie['id_categorie'] ?>">
+                                   Modifier
+                            </a>
                         </td>
                     </tr>
 

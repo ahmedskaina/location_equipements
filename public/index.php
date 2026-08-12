@@ -20,4 +20,7 @@ switch ($action) {
     default:
         echo "Page introuvable.";
         break;
+    case 'edit-category':
+        $controller->edit();
+        break;
 }
