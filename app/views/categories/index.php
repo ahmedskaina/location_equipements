@@ -49,10 +49,22 @@
                             <?= htmlspecialchars($categorie['description'] ?? '') ?>
                         </td>
                         <td>
-                            <a href="index.php?action=edit-category&id=<?= $categorie['id_categorie'] ?>">
-                                   Modifier
-                            </a>
+
+                           <a href="index.php?action=edit-category&id=<?= $categorie['id_categorie'] ?>">
+                           Modifier
+                           </a>
+
+    |
+
+                           <a
+                              href="index.php?action=delete-category&id=<?= $categorie['id_categorie'] ?>"
+                              onclick="return confirm('Voulez-vous vraiment supprimer cette catégorie ?');"
+                            >
+                            Supprimer
+                           </a>
+
                         </td>
+
                     </tr>
 
                 <?php endforeach; ?>

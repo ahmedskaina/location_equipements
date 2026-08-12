@@ -88,4 +88,31 @@ class CategorieController
 
     require __DIR__ . '/../views/categories/edit.php';
 }
+public function delete(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $categorie = $this->model->getById($id);
+
+    if (!$categorie) {
+        die("Catégorie introuvable.");
+    }
+
+    try {
+        $this->model->delete($id);
+
+        header('Location: index.php?action=categories');
+        exit;
+
+    } catch (PDOException $e) {
+        die(
+            "Impossible de supprimer cette catégorie. "
+            . "Elle est peut-être utilisée par un équipement."
+        );
+    }
+}
 }

@@ -17,10 +17,15 @@ switch ($action) {
         $controller->create();
         break;
 
-    default:
-        echo "Page introuvable.";
-        break;
     case 'edit-category':
         $controller->edit();
+        break;
+
+    case 'delete-category':
+        $controller->delete();
+        break;
+
+    default:
+        echo "Page introuvable.";
         break;
 }

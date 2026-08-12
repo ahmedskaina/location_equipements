@@ -64,5 +64,16 @@ public function update(
         ':id' => $id
     ]);
 }
+public function delete(int $id): bool
+{
+    $sql = "DELETE FROM categorie_equipement
+            WHERE id_categorie = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':id' => $id
+    ]);
+}
 
 }
