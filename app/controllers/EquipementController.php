@@ -273,4 +273,33 @@ public function edit(): void
 
     require __DIR__ . '/../views/equipements/edit.php';
 }
+public function delete(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $equipement = $this->model->getById($id);
+
+    if (!$equipement) {
+        die("Équipement introuvable.");
+    }
+
+    try {
+
+        $this->model->delete($id);
+
+        header('Location: index.php?action=equipements');
+        exit;
+
+    } catch (PDOException $e) {
+
+        die(
+            "Impossible de supprimer cet équipement. "
+            . "Il est peut-être associé à une location."
+        );
+    }
+}
 }

@@ -109,12 +109,23 @@
             <?= htmlspecialchars($equipement['etat']) ?>
         </td>
 
-        <td>
+       <td>
+
     <a href="index.php?action=edit-equipement&id=<?= $equipement['id_equipement'] ?>">
         Modifier
     </a>
-</td>
 
+    |
+
+    <a
+        href="index.php?action=delete-equipement&id=<?= $equipement['id_equipement'] ?>"
+        onclick="return confirm('Voulez-vous vraiment supprimer cet équipement ?');"
+    >
+        Supprimer
+    </a>
+
+</td>
+     
     </tr>
 
 <?php endforeach; ?>

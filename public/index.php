@@ -36,6 +36,9 @@ switch ($action) {
         break;
     case 'edit-equipement':
     $equipementController->edit();
+    break;
+    case 'delete-equipement':
+    $equipementController->delete();
     break;    
     default:
         echo "Page introuvable.";
