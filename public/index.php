@@ -44,6 +44,9 @@ switch ($action) {
     break;
     case 'utilisateurs':
     $utilisateurController->index();
+    break;
+    case 'create-utilisateur':
+    $utilisateurController->create();
     break;    
     default:
         echo "Page introuvable.";

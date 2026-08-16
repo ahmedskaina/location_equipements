@@ -12,6 +12,11 @@
 <body>
 
     <h1>Liste des utilisateurs</h1>
+    <a href="index.php?action=create-utilisateur">
+    Ajouter un utilisateur
+</a>
+
+<br><br>
 
     <?php if (empty($utilisateurs)): ?>
 
