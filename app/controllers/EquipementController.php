@@ -289,7 +289,24 @@ public function delete(): void
 
     try {
 
+        // Suppression de l'équipement dans la base
         $this->model->delete($id);
+
+        // Suppression de l'image physique
+        if (!empty($equipement['image'])) {
+
+            $imagesDirectory =
+    realpath(__DIR__ . '/../../public/images');
+
+$imagePath =
+    $imagesDirectory
+    . DIRECTORY_SEPARATOR
+    . basename($equipement['image']);
+
+if (file_exists($imagePath)) {
+    unlink($imagePath);
+}
+        }
 
         header('Location: index.php?action=equipements');
         exit;
