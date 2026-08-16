@@ -1,28 +1,35 @@
 <?php
 
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../app/controllers/CategorieController.php';
 
-$controller = new CategorieController($pdo);
+require_once __DIR__ . '/../app/controllers/CategorieController.php';
+require_once __DIR__ . '/../app/controllers/EquipementController.php';
+
+$categorieController = new CategorieController($pdo);
+$equipementController = new EquipementController($pdo);
 
 $action = $_GET['action'] ?? 'categories';
 
 switch ($action) {
 
     case 'categories':
-        $controller->index();
+        $categorieController->index();
         break;
 
     case 'create-category':
-        $controller->create();
+        $categorieController->create();
         break;
 
     case 'edit-category':
-        $controller->edit();
+        $categorieController->edit();
         break;
 
     case 'delete-category':
-        $controller->delete();
+        $categorieController->delete();
+        break;
+
+    case 'equipements':
+        $equipementController->index();
         break;
 
     default:

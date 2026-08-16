@@ -9,6 +9,11 @@
 <body>
 
     <h1>Liste des catégories d'équipement</h1>
+    <a href="index.php?action=equipements">
+    Gestion des équipements
+</a>
+
+<br><br>
     <a href="index.php?action=create-category">
     Ajouter une catégorie
 </a>
