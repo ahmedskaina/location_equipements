@@ -70,6 +70,68 @@ class EquipementController
         if ($idCategorie <= 0) {
             $errors[] = "Veuillez sélectionner une catégorie.";
         }
+        $imageName = null;
+
+if (
+    isset($_FILES['image']) &&
+    $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE
+) {
+
+    if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+
+        $errors[] = "Erreur lors de l'envoi de l'image.";
+
+    } else {
+
+        $extensionsAutorisees = [
+            'jpg',
+            'jpeg',
+            'png'
+        ];
+
+        $extension = strtolower(
+            pathinfo(
+                $_FILES['image']['name'],
+                PATHINFO_EXTENSION
+            )
+        );
+
+        if (!in_array($extension, $extensionsAutorisees, true)) {
+
+            $errors[] =
+                "L'image doit être au format JPG, JPEG ou PNG.";
+        }
+
+        if ($_FILES['image']['size'] > 2 * 1024 * 1024) {
+
+            $errors[] =
+                "L'image ne doit pas dépasser 2 Mo.";
+        }
+
+        if (empty($errors)) {
+
+            $imageName =
+                uniqid('equipement_', true)
+                . '.'
+                . $extension;
+
+            $destination =
+                __DIR__
+                . '/../../public/images/'
+                . $imageName;
+
+            if (
+                !move_uploaded_file(
+                    $_FILES['image']['tmp_name'],
+                    $destination
+                )
+            ) {
+                $errors[] =
+                    "Impossible d'enregistrer l'image.";
+            }
+        }
+    }
+}
 
         if (empty($errors)) {
 
@@ -81,6 +143,7 @@ class EquipementController
                 $quantiteStock,
                 $seuilAlerte,
                 $etat,
+                $imageName,
                 $idCategorie
             );
 
@@ -92,4 +155,3 @@ class EquipementController
     require __DIR__ . '/../views/equipements/create.php';
 }
 }
-?>

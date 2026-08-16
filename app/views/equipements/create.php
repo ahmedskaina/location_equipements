@@ -26,7 +26,7 @@
 
     <?php endif; ?>
 
-    <form method="POST" action="index.php?action=create-equipement">
+    <form method="POST" action="index.php?action=create-equipement" enctype="multipart/form-data">
 
         <div>
             <label>Nom :</label>
@@ -144,6 +144,17 @@
 
             </select>
         </div>
+        <div>
+                 <label>Image :</label>
+
+             <input
+            type="file"
+            name="image"
+            accept=".jpg,.jpeg,.png"
+             >
+        </div>
+
+<br>
 
         <br>
 

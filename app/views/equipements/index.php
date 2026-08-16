@@ -23,62 +23,96 @@
 
         <table border="1" cellpadding="10">
 
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Référence</th>
-                    <th>Catégorie</th>
-                    <th>Prix / jour</th>
-                    <th>Stock</th>
-                    <th>Seuil d'alerte</th>
-                    <th>État</th>
-                </tr>
-            </thead>
+           <thead>
+    <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Nom</th>
+        <th>Référence</th>
+        <th>Catégorie</th>
+        <th>Prix / jour</th>
+        <th>Stock</th>
+        <th>Seuil d'alerte</th>
+        <th>État</th>
+    </tr>
+</thead>
 
             <tbody>
 
-                <?php foreach ($equipements as $equipement): ?>
+<?php foreach ($equipements as $equipement): ?>
 
-                    <tr>
+    <tr>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['id_equipement']) ?>
-                        </td>
+        <!-- ID -->
+        <td>
+            <?= htmlspecialchars($equipement['id_equipement']) ?>
+        </td>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['nom']) ?>
-                        </td>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['reference']) ?>
-                        </td>
+        <!-- Image -->
+        <td>
+            <?php if (!empty($equipement['image'])): ?>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['nom_categorie']) ?>
-                        </td>
+                <img
+                    src="images/<?= htmlspecialchars($equipement['image']) ?>"
+                    alt="<?= htmlspecialchars($equipement['nom']) ?>"
+                    width="100"
+                >
 
-                        <td>
-                            <?= htmlspecialchars($equipement['prix_journalier']) ?> DT
-                        </td>
+            <?php else: ?>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['quantite_stock']) ?>
-                        </td>
+                Aucune image
 
-                        <td>
-                            <?= htmlspecialchars($equipement['seuil_alerte']) ?>
-                        </td>
+            <?php endif; ?>
+        </td>
 
-                        <td>
-                            <?= htmlspecialchars($equipement['etat']) ?>
-                        </td>
 
-                    </tr>
+        <!-- Nom -->
+        <td>
+            <?= htmlspecialchars($equipement['nom']) ?>
+        </td>
 
-                <?php endforeach; ?>
 
-            </tbody>
+        <!-- Référence -->
+        <td>
+            <?= htmlspecialchars($equipement['reference']) ?>
+        </td>
+
+
+        <!-- Catégorie -->
+        <td>
+            <?= htmlspecialchars($equipement['nom_categorie']) ?>
+        </td>
+
+
+        <!-- Prix -->
+        <td>
+            <?= htmlspecialchars($equipement['prix_journalier']) ?> DT
+        </td>
+
+
+        <!-- Stock -->
+        <td>
+            <?= htmlspecialchars($equipement['quantite_stock']) ?>
+        </td>
+
+
+        <!-- Seuil d'alerte -->
+        <td>
+            <?= htmlspecialchars($equipement['seuil_alerte']) ?>
+        </td>
+
+
+        <!-- État -->
+        <td>
+            <?= htmlspecialchars($equipement['etat']) ?>
+        </td>
+
+    </tr>
+
+<?php endforeach; ?>
+
+</tbody>
 
         </table>
 

@@ -49,6 +49,7 @@ class Equipement
     int $quantiteStock,
     int $seuilAlerte,
     string $etat,
+    ?string $image,
     int $idCategorie
 ): bool {
 
@@ -61,6 +62,7 @@ class Equipement
                 quantite_stock,
                 seuil_alerte,
                 etat,
+                image,
                 id_categorie
             )
             VALUES
@@ -72,6 +74,7 @@ class Equipement
                 :quantite_stock,
                 :seuil_alerte,
                 :etat,
+                :image,
                 :id_categorie
             )";
 
@@ -85,6 +88,7 @@ class Equipement
         ':quantite_stock' => $quantiteStock,
         ':seuil_alerte' => $seuilAlerte,
         ':etat' => $etat,
+        ':image' => $image,
         ':id_categorie' => $idCategorie
     ]);
 }
