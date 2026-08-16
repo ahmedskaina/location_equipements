@@ -8,6 +8,16 @@ class Equipement
     {
         $this->pdo = $pdo;
     }
+    public function getCategories(): array
+{
+    $sql = "SELECT id_categorie, nom
+            FROM categorie_equipement
+            ORDER BY nom ASC";
+
+    $stmt = $this->pdo->query($sql);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public function getAll(): array
     {
@@ -31,4 +41,51 @@ class Equipement
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function create(
+    string $nom,
+    string $reference,
+    string $description,
+    float $prixJournalier,
+    int $quantiteStock,
+    int $seuilAlerte,
+    string $etat,
+    int $idCategorie
+): bool {
+
+    $sql = "INSERT INTO equipement
+            (
+                nom,
+                reference,
+                description,
+                prix_journalier,
+                quantite_stock,
+                seuil_alerte,
+                etat,
+                id_categorie
+            )
+            VALUES
+            (
+                :nom,
+                :reference,
+                :description,
+                :prix_journalier,
+                :quantite_stock,
+                :seuil_alerte,
+                :etat,
+                :id_categorie
+            )";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':nom' => $nom,
+        ':reference' => $reference,
+        ':description' => $description,
+        ':prix_journalier' => $prixJournalier,
+        ':quantite_stock' => $quantiteStock,
+        ':seuil_alerte' => $seuilAlerte,
+        ':etat' => $etat,
+        ':id_categorie' => $idCategorie
+    ]);
+}
 }

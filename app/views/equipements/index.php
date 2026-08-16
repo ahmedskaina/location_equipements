@@ -9,6 +9,11 @@
 <body>
 
     <h1>Liste des équipements</h1>
+    <a href="index.php?action=create-equipement">
+    Ajouter un équipement
+</a>
+
+<br><br>
 
     <?php if (empty($equipements)): ?>
 

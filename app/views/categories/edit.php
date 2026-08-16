@@ -1,3 +1,7 @@
+<?php
+/** @var array $categorie */
+/** @var array $errors */
+?>
 <!DOCTYPE html>
 <html lang="fr">
 

@@ -31,7 +31,9 @@ switch ($action) {
     case 'equipements':
         $equipementController->index();
         break;
-
+    case 'create-equipement':
+        $equipementController->create();
+        break;
     default:
         echo "Page introuvable.";
         break;
