@@ -34,6 +34,7 @@
         <th>Stock</th>
         <th>Seuil d'alerte</th>
         <th>État</th>
+        <th>Actions</th>
     </tr>
 </thead>
 
@@ -107,6 +108,12 @@
         <td>
             <?= htmlspecialchars($equipement['etat']) ?>
         </td>
+
+        <td>
+    <a href="index.php?action=edit-equipement&id=<?= $equipement['id_equipement'] ?>">
+        Modifier
+    </a>
+</td>
 
     </tr>
 

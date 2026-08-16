@@ -92,4 +92,55 @@ class Equipement
         ':id_categorie' => $idCategorie
     ]);
 }
+public function getById(int $id): array|false
+{
+    $sql = "SELECT *
+            FROM equipement
+            WHERE id_equipement = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id' => $id
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function update(
+    int $id,
+    string $nom,
+    string $reference,
+    string $description,
+    float $prixJournalier,
+    int $quantiteStock,
+    int $seuilAlerte,
+    string $etat,
+    int $idCategorie
+): bool {
+
+    $sql = "UPDATE equipement
+            SET nom = :nom,
+                reference = :reference,
+                description = :description,
+                prix_journalier = :prix_journalier,
+                quantite_stock = :quantite_stock,
+                seuil_alerte = :seuil_alerte,
+                etat = :etat,
+                id_categorie = :id_categorie
+            WHERE id_equipement = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':nom' => $nom,
+        ':reference' => $reference,
+        ':description' => $description,
+        ':prix_journalier' => $prixJournalier,
+        ':quantite_stock' => $quantiteStock,
+        ':seuil_alerte' => $seuilAlerte,
+        ':etat' => $etat,
+        ':id_categorie' => $idCategorie,
+        ':id' => $id
+    ]);
+}
 }

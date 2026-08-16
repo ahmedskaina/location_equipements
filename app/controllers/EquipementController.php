@@ -154,4 +154,123 @@ if (
 
     require __DIR__ . '/../views/equipements/create.php';
 }
+public function edit(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $equipement = $this->model->getById($id);
+
+    if (!$equipement) {
+        die("Équipement introuvable.");
+    }
+
+    $categories = $this->model->getCategories();
+
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $nom = trim($_POST['nom'] ?? '');
+        $reference = trim($_POST['reference'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+
+        $prixJournalier =
+            (float) ($_POST['prix_journalier'] ?? 0);
+
+        $quantiteStock =
+            (int) ($_POST['quantite_stock'] ?? -1);
+
+        $seuilAlerte =
+            (int) ($_POST['seuil_alerte'] ?? -1);
+
+        $etat = $_POST['etat'] ?? '';
+
+        $idCategorie =
+            (int) ($_POST['id_categorie'] ?? 0);
+
+
+        // Contrôles de saisie
+
+        if ($nom === '') {
+            $errors[] = "Le nom est obligatoire.";
+        }
+
+        if ($reference === '') {
+            $errors[] = "La référence est obligatoire.";
+        }
+
+        if ($prixJournalier <= 0) {
+            $errors[] =
+                "Le prix journalier doit être supérieur à 0.";
+        }
+
+        if ($quantiteStock < 0) {
+            $errors[] =
+                "La quantité en stock ne peut pas être négative.";
+        }
+
+        if ($seuilAlerte < 0) {
+            $errors[] =
+                "Le seuil d'alerte ne peut pas être négatif.";
+        }
+
+        $etatsAutorises = [
+            'DISPONIBLE',
+            'EN_LOCATION',
+            'EN_MAINTENANCE',
+            'ENDOMMAGE'
+        ];
+
+        if (!in_array($etat, $etatsAutorises, true)) {
+            $errors[] = "L'état sélectionné est invalide.";
+        }
+
+        if ($idCategorie <= 0) {
+            $errors[] =
+                "Veuillez sélectionner une catégorie.";
+        }
+
+
+        // Si aucune erreur
+
+        if (empty($errors)) {
+
+            $this->model->update(
+                $id,
+                $nom,
+                $reference,
+                $description,
+                $prixJournalier,
+                $quantiteStock,
+                $seuilAlerte,
+                $etat,
+                $idCategorie
+            );
+
+            header(
+                'Location: index.php?action=equipements'
+            );
+
+            exit;
+        }
+
+
+        // Garder les nouvelles valeurs si erreur
+
+        $equipement['nom'] = $nom;
+        $equipement['reference'] = $reference;
+        $equipement['description'] = $description;
+        $equipement['prix_journalier'] = $prixJournalier;
+        $equipement['quantite_stock'] = $quantiteStock;
+        $equipement['seuil_alerte'] = $seuilAlerte;
+        $equipement['etat'] = $etat;
+        $equipement['id_categorie'] = $idCategorie;
+    }
+
+    require __DIR__ . '/../views/equipements/edit.php';
+}
 }
