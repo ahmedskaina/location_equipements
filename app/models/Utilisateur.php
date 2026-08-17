@@ -145,4 +145,15 @@ public function update(
         ':id' => $id
     ]);
 }
+public function delete(int $id): bool
+{
+    $sql = "DELETE FROM utilisateur
+            WHERE id_utilisateur = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':id' => $id
+    ]);
+}
 }

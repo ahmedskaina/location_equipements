@@ -37,20 +37,23 @@ switch ($action) {
         $equipementController->create();
         break;
     case 'edit-equipement':
-    $equipementController->edit();
-    break;
+        $equipementController->edit();
+        break;
     case 'delete-equipement':
-    $equipementController->delete();
-    break;
+        $equipementController->delete();
+        break;
     case 'utilisateurs':
-    $utilisateurController->index();
-    break;
+        $utilisateurController->index();
+        break;
     case 'create-utilisateur':
-    $utilisateurController->create();
-    break;
+        $utilisateurController->create();
+        break;
     case 'edit-utilisateur':
-    $utilisateurController->edit();
-    break;    
+        $utilisateurController->edit();
+        break;
+    case 'delete-utilisateur':
+        $utilisateurController->delete();
+        break;    
     default:
         echo "Page introuvable.";
         break;

@@ -68,10 +68,21 @@
                             <?= htmlspecialchars($utilisateur['role']) ?>
                         </td>
                         <td>
-                           <a href="index.php?action=edit-utilisateur&id=<?= $utilisateur['id_utilisateur'] ?>">
-                            Modifier
-                           </a>
-                        </td>
+
+    <a href="index.php?action=edit-utilisateur&id=<?= $utilisateur['id_utilisateur'] ?>">
+        Modifier
+    </a>
+
+    |
+
+    <a
+        href="index.php?action=delete-utilisateur&id=<?= $utilisateur['id_utilisateur'] ?>"
+        onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');"
+    >
+        Supprimer
+    </a>
+
+</td>
                     </tr>
 
                 <?php endforeach; ?>

@@ -170,4 +170,33 @@ public function edit(): void
 
     require __DIR__ . '/../views/utilisateurs/edit.php';
 }
+public function delete(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $utilisateur = $this->model->getById($id);
+
+    if (!$utilisateur) {
+        die("Utilisateur introuvable.");
+    }
+
+    try {
+
+        $this->model->delete($id);
+
+        header('Location: index.php?action=utilisateurs');
+        exit;
+
+    } catch (PDOException $e) {
+
+        die(
+            "Impossible de supprimer cet utilisateur. "
+            . "Il est peut-être associé à une location."
+        );
+    }
+}
 }
