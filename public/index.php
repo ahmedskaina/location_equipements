@@ -5,10 +5,12 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/controllers/CategorieController.php';
 require_once __DIR__ . '/../app/controllers/EquipementController.php';
 require_once __DIR__ . '/../app/controllers/UtilisateurController.php';
+require_once __DIR__ . '/../app/controllers/LocationController.php';
 
 $categorieController = new CategorieController($pdo);
 $equipementController = new EquipementController($pdo);
 $utilisateurController = new UtilisateurController($pdo);
+$locationController = new LocationController($pdo);
 
 $action = $_GET['action'] ?? 'categories';
 
@@ -53,6 +55,9 @@ switch ($action) {
         break;
     case 'delete-utilisateur':
         $utilisateurController->delete();
+        break;
+    case 'locations':
+        $locationController->index();
         break;    
     default:
         echo "Page introuvable.";

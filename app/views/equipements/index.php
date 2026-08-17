@@ -9,6 +9,11 @@
 <body>
 
     <h1>Liste des équipements</h1>
+    <a href="index.php?action=locations">
+    Gestion des locations
+</a>
+
+<br><br>
     <a href="index.php?action=utilisateurs">
     Gestion des utilisateurs
 </a>
