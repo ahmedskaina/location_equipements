@@ -78,4 +78,71 @@ public function emailExists(string $email): bool
 
     return $stmt->fetchColumn() > 0;
 }
+public function getById(int $id): array|false
+{
+    $sql = "SELECT
+                id_utilisateur,
+                nom,
+                prenom,
+                email,
+                telephone,
+                role
+            FROM utilisateur
+            WHERE id_utilisateur = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id' => $id
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function emailExistsForOtherUser(
+    string $email,
+    int $id
+): bool {
+
+    $sql = "SELECT COUNT(*)
+            FROM utilisateur
+            WHERE email = :email
+            AND id_utilisateur != :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':email' => $email,
+        ':id' => $id
+    ]);
+
+    return $stmt->fetchColumn() > 0;
+}
+public function update(
+    int $id,
+    string $nom,
+    string $prenom,
+    string $email,
+    string $telephone,
+    string $role
+): bool {
+
+    $sql = "UPDATE utilisateur
+            SET nom = :nom,
+                prenom = :prenom,
+                email = :email,
+                telephone = :telephone,
+                role = :role
+            WHERE id_utilisateur = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':nom' => $nom,
+        ':prenom' => $prenom,
+        ':email' => $email,
+        ':telephone' => $telephone,
+        ':role' => $role,
+        ':id' => $id
+    ]);
+}
 }

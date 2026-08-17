@@ -34,6 +34,7 @@
                     <th>Email</th>
                     <th>Téléphone</th>
                     <th>Rôle</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -66,7 +67,11 @@
                         <td>
                             <?= htmlspecialchars($utilisateur['role']) ?>
                         </td>
-
+                        <td>
+                           <a href="index.php?action=edit-utilisateur&id=<?= $utilisateur['id_utilisateur'] ?>">
+                            Modifier
+                           </a>
+                        </td>
                     </tr>
 
                 <?php endforeach; ?>
