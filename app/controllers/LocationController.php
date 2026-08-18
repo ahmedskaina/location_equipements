@@ -81,13 +81,36 @@ class LocationController
                     "Cet équipement n'est pas disponible.";
             }
 
-            if (
-                $quantite >
-                (int) $equipement['quantite_stock']
-            ) {
-                $errors[] =
-                    "La quantité demandée dépasse le stock disponible.";
-            }
+           if (
+    $equipement
+    && $dateDebut !== ''
+    && $dateFin !== ''
+    && $dateFin >= $dateDebut
+    && $quantite > 0
+) {
+
+    $quantiteReservee =
+        $this->model->getQuantiteReservee(
+            $idEquipement,
+            $dateDebut,
+            $dateFin
+        );
+
+    $stockTotal =
+        (int) $equipement['quantite_stock'];
+
+    $stockDisponible =
+        $stockTotal - $quantiteReservee;
+
+    if ($quantite > $stockDisponible) {
+
+        $errors[] =
+            "Stock insuffisant pour cette période. "
+            . "Quantité disponible : "
+            . $stockDisponible
+            . ".";
+    }
+}
         }
 
         if (empty($errors)) {

@@ -168,4 +168,32 @@ public function getById(int $id): array|false
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+public function getQuantiteReservee(
+    int $idEquipement,
+    string $dateDebut,
+    string $dateFin
+): int {
+
+    $sql = "SELECT COALESCE(SUM(quantite), 0)
+            FROM location
+            WHERE id_equipement = :id_equipement
+
+            AND statut IN (
+                'VALIDEE',
+                'EN_COURS'
+            )
+
+            AND date_debut <= :date_fin
+            AND date_fin >= :date_debut";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id_equipement' => $idEquipement,
+        ':date_debut' => $dateDebut,
+        ':date_fin' => $dateFin
+    ]);
+
+    return (int) $stmt->fetchColumn();
+}
 }
