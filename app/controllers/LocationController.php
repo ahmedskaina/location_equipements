@@ -17,4 +17,114 @@ class LocationController
 
         require __DIR__ . '/../views/locations/index.php';
     }
+    public function create(): void
+{
+    $clients = $this->model->getClients();
+    $equipements = $this->model->getEquipements();
+
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $idClient = (int) ($_POST['id_client'] ?? 0);
+        $idEquipement = (int) ($_POST['id_equipement'] ?? 0);
+
+        $dateDebut = $_POST['date_debut'] ?? '';
+        $dateFin = $_POST['date_fin'] ?? '';
+
+        $quantite = (int) ($_POST['quantite'] ?? 0);
+
+        if ($idClient <= 0) {
+            $errors[] = "Veuillez sélectionner un client.";
+        }
+
+        if ($idEquipement <= 0) {
+            $errors[] = "Veuillez sélectionner un équipement.";
+        }
+
+        if ($dateDebut === '') {
+            $errors[] = "La date de début est obligatoire.";
+        }
+
+        if ($dateFin === '') {
+            $errors[] = "La date de fin est obligatoire.";
+        }
+
+        if (
+            $dateDebut !== ''
+            && $dateFin !== ''
+            && $dateFin < $dateDebut
+        ) {
+            $errors[] =
+                "La date de fin doit être supérieure ou égale à la date de début.";
+        }
+
+        if ($quantite <= 0) {
+            $errors[] = "La quantité doit être supérieure à 0.";
+        }
+
+        $equipement = false;
+
+        if ($idEquipement > 0) {
+            $equipement =
+                $this->model->getEquipementById($idEquipement);
+
+            if (!$equipement) {
+                $errors[] = "Équipement introuvable.";
+            }
+        }
+
+        if ($equipement) {
+
+            if ($equipement['etat'] !== 'DISPONIBLE') {
+                $errors[] =
+                    "Cet équipement n'est pas disponible.";
+            }
+
+            if (
+                $quantite >
+                (int) $equipement['quantite_stock']
+            ) {
+                $errors[] =
+                    "La quantité demandée dépasse le stock disponible.";
+            }
+        }
+
+        if (empty($errors)) {
+
+            $debut = new DateTime($dateDebut);
+            $fin = new DateTime($dateFin);
+
+            $difference = $debut->diff($fin);
+
+            $duree = $difference->days + 1;
+
+            $prixJournalier =
+                (float) $equipement['prix_journalier'];
+
+            $prixTotal =
+                $prixJournalier
+                * $quantite
+                * $duree;
+
+            $this->model->create(
+                $dateDebut,
+                $dateFin,
+                $duree,
+                $quantite,
+                $prixTotal,
+                $idClient,
+                $idEquipement
+            );
+
+            header(
+                'Location: index.php?action=locations'
+            );
+
+            exit;
+        }
+    }
+
+    require __DIR__ . '/../views/locations/create.php';
+}
 }

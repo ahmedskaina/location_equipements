@@ -13,6 +13,12 @@
 
 <h1>Liste des locations</h1>
 
+<a href="index.php?action=create-location">
+    Ajouter une demande de location
+</a>
+
+<br><br>
+
 
 <?php if (empty($locations)): ?>
 

@@ -58,7 +58,10 @@ switch ($action) {
         break;
     case 'locations':
         $locationController->index();
-        break;    
+        break; 
+    case 'create-location':
+        $locationController->create();
+        break;       
     default:
         echo "Page introuvable.";
         break;
