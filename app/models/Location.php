@@ -138,5 +138,34 @@ public function create(
         ':id_equipement' => $idEquipement
     ]);
 }
+public function updateStatut(
+    int $id,
+    string $statut
+): bool {
 
+    $sql = "UPDATE location
+            SET statut = :statut
+            WHERE id_location = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':statut' => $statut,
+        ':id' => $id
+    ]);
+}
+public function getById(int $id): array|false
+{
+    $sql = "SELECT *
+            FROM location
+            WHERE id_location = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id' => $id
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 }

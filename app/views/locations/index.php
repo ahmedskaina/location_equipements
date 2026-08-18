@@ -43,6 +43,7 @@
                 <th>Frais additionnels</th>
                 <th>Statut</th>
                 <th>Date demande</th>
+                <th>Actions</th>
             </tr>
 
         </thead>
@@ -107,7 +108,33 @@
                 <td>
                     <?= htmlspecialchars($location['date_demande']) ?>
                 </td>
+                <td>
 
+       <?php if ($location['statut'] === 'EN_ATTENTE'): ?>
+
+        <a
+            href="index.php?action=validate-location&id=<?= $location['id_location'] ?>"
+            onclick="return confirm('Voulez-vous valider cette demande ?');"
+        >
+            Valider
+        </a>
+
+        |
+
+        <a
+            href="index.php?action=refuse-location&id=<?= $location['id_location'] ?>"
+            onclick="return confirm('Voulez-vous refuser cette demande ?');"
+        >
+            Refuser
+        </a>
+
+    <?php else: ?>
+
+        -
+
+    <?php endif; ?>
+
+        </td>
             </tr>
 
         <?php endforeach; ?>

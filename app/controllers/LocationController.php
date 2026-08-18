@@ -127,4 +127,68 @@ class LocationController
 
     require __DIR__ . '/../views/locations/create.php';
 }
+public function validate(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $location = $this->model->getById($id);
+
+    if (!$location) {
+        die("Location introuvable.");
+    }
+
+    if ($location['statut'] !== 'EN_ATTENTE') {
+        die(
+            "Seules les demandes en attente "
+            . "peuvent être validées."
+        );
+    }
+
+    $this->model->updateStatut(
+        $id,
+        'VALIDEE'
+    );
+
+    header(
+        'Location: index.php?action=locations'
+    );
+
+    exit;
+}
+public function refuse(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $location = $this->model->getById($id);
+
+    if (!$location) {
+        die("Location introuvable.");
+    }
+
+    if ($location['statut'] !== 'EN_ATTENTE') {
+        die(
+            "Seules les demandes en attente "
+            . "peuvent être refusées."
+        );
+    }
+
+    $this->model->updateStatut(
+        $id,
+        'REFUSEE'
+    );
+
+    header(
+        'Location: index.php?action=locations'
+    );
+
+    exit;
+}
 }
