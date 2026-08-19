@@ -108,9 +108,9 @@
                 <td>
                     <?= htmlspecialchars($location['date_demande']) ?>
                 </td>
-                <td>
+              <td>
 
-       <?php if ($location['statut'] === 'EN_ATTENTE'): ?>
+    <?php if ($location['statut'] === 'EN_ATTENTE'): ?>
 
         <a
             href="index.php?action=validate-location&id=<?= $location['id_location'] ?>"
@@ -128,13 +128,24 @@
             Refuser
         </a>
 
+
+    <?php elseif ($location['statut'] === 'VALIDEE'): ?>
+
+        <a
+            href="index.php?action=start-location&id=<?= $location['id_location'] ?>"
+            onclick="return confirm('Voulez-vous démarrer cette location ?');"
+        >
+            Démarrer
+        </a>
+
+
     <?php else: ?>
 
         -
 
     <?php endif; ?>
 
-        </td>
+</td>
             </tr>
 
         <?php endforeach; ?>

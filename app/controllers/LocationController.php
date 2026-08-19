@@ -1,14 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../models/Location.php';
+require_once __DIR__ . '/../models/Equipement.php';
 
 class LocationController
 {
     private Location $model;
+    private Equipement $equipementModel;
 
     public function __construct(PDO $pdo)
     {
         $this->model = new Location($pdo);
+        $this->equipementModel = new Equipement($pdo);
+
     }
 
     public function index(): void
@@ -206,6 +210,43 @@ public function refuse(): void
     $this->model->updateStatut(
         $id,
         'REFUSEE'
+    );
+
+    header(
+        'Location: index.php?action=locations'
+    );
+
+    exit;
+}
+public function start(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $location = $this->model->getById($id);
+
+    if (!$location) {
+        die("Location introuvable.");
+    }
+
+    if ($location['statut'] !== 'VALIDEE') {
+        die(
+            "Seule une location validée "
+            . "peut être démarrée."
+        );
+    }
+
+    $this->model->updateStatut(
+        $id,
+        'EN_COURS'
+    );
+
+    $this->equipementModel->updateEtat(
+        (int) $location['id_equipement'],
+        'EN_LOCATION'
     );
 
     header(

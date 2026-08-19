@@ -154,4 +154,20 @@ public function delete(int $id): bool
         ':id' => $id
     ]);
 }
+public function updateEtat(
+    int $id,
+    string $etat
+): bool {
+
+    $sql = "UPDATE equipement
+            SET etat = :etat
+            WHERE id_equipement = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':etat' => $etat,
+        ':id' => $id
+    ]);
+}
 }

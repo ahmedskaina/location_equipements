@@ -67,7 +67,10 @@ switch ($action) {
         break;
     case 'refuse-location':
         $locationController->refuse();
-        break;           
+        break;   
+    case 'start-location':
+        $locationController->start();
+        break;        
     default:
         echo "Page introuvable.";
         break;
