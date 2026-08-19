@@ -255,4 +255,63 @@ public function start(): void
 
     exit;
 }
+public function returnEquipment(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $location = $this->model->getById($id);
+
+    if (!$location) {
+        die("Location introuvable.");
+    }
+
+    if ($location['statut'] !== 'EN_COURS') {
+        die(
+            "Seule une location en cours "
+            . "peut être retournée."
+        );
+    }
+
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $etatRetour = $_POST['etat_retour'] ?? '';
+
+        $etatsAutorises = [
+            'DISPONIBLE',
+            'EN_MAINTENANCE',
+            'ENDOMMAGE'
+        ];
+
+        if (!in_array($etatRetour, $etatsAutorises, true)) {
+            $errors[] = "L'état de retour est invalide.";
+        }
+
+        if (empty($errors)) {
+
+            $this->model->updateStatut(
+                $id,
+                'TERMINEE'
+            );
+
+            $this->equipementModel->updateEtat(
+                (int) $location['id_equipement'],
+                $etatRetour
+            );
+
+            header(
+                'Location: index.php?action=locations'
+            );
+
+            exit;
+        }
+    }
+
+    require __DIR__ . '/../views/locations/return.php';
+}
 }

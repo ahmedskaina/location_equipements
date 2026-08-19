@@ -128,7 +128,6 @@
             Refuser
         </a>
 
-
     <?php elseif ($location['statut'] === 'VALIDEE'): ?>
 
         <a
@@ -138,6 +137,13 @@
             Démarrer
         </a>
 
+    <?php elseif ($location['statut'] === 'EN_COURS'): ?>
+
+        <a
+            href="index.php?action=return-location&id=<?= $location['id_location'] ?>"
+        >
+            Enregistrer le retour
+        </a>
 
     <?php else: ?>
 
