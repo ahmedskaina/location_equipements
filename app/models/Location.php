@@ -196,4 +196,21 @@ public function getQuantiteReservee(
 
     return (int) $stmt->fetchColumn();
 }
+public function terminerAvecFrais(
+    int $id,
+    float $fraisAdditionnels
+): bool {
+
+    $sql = "UPDATE location
+            SET statut = 'TERMINEE',
+                frais_additionnels = :frais
+            WHERE id_location = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':frais' => $fraisAdditionnels,
+        ':id' => $id
+    ]);
+}
 }

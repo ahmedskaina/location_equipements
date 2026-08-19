@@ -39,6 +39,22 @@
 
     <div>
         <label>État de l'équipement au retour :</label>
+        <br>
+
+<div>
+    <label>Frais additionnels :</label>
+
+    <input
+        type="number"
+        step="0.001"
+        name="frais_additionnels"
+        value="<?= htmlspecialchars(
+            $_POST['frais_additionnels'] ?? '0'
+        ) ?>"
+    >
+
+    <span>DT</span>
+</div>
 
         <select name="etat_retour">
 

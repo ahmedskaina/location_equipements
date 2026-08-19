@@ -280,7 +280,11 @@ public function returnEquipment(): void
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $etatRetour = $_POST['etat_retour'] ?? '';
+        $etatRetour =
+            $_POST['etat_retour'] ?? '';
+
+        $fraisAdditionnels =
+            (float) ($_POST['frais_additionnels'] ?? 0);
 
         $etatsAutorises = [
             'DISPONIBLE',
@@ -288,15 +292,25 @@ public function returnEquipment(): void
             'ENDOMMAGE'
         ];
 
-        if (!in_array($etatRetour, $etatsAutorises, true)) {
-            $errors[] = "L'état de retour est invalide.";
+        if (!in_array(
+            $etatRetour,
+            $etatsAutorises,
+            true
+        )) {
+            $errors[] =
+                "L'état de retour est invalide.";
+        }
+
+        if ($fraisAdditionnels < 0) {
+            $errors[] =
+                "Les frais additionnels ne peuvent pas être négatifs.";
         }
 
         if (empty($errors)) {
 
-            $this->model->updateStatut(
+            $this->model->terminerAvecFrais(
                 $id,
-                'TERMINEE'
+                $fraisAdditionnels
             );
 
             $this->equipementModel->updateEtat(
