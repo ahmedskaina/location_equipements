@@ -319,4 +319,11 @@ if (file_exists($imagePath)) {
         );
     }
 }
+public function alerts(): void
+{
+    $equipements = $this->model->getStocksFaibles();
+
+    require __DIR__
+        . '/../views/equipements/alerts.php';
+}
 }

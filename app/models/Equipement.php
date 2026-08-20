@@ -170,4 +170,27 @@ public function updateEtat(
         ':id' => $id
     ]);
 }
+public function getStocksFaibles(): array
+{
+    $sql = "SELECT
+                e.id_equipement,
+                e.nom,
+                e.reference,
+                e.quantite_stock,
+                e.seuil_alerte,
+                c.nom AS nom_categorie
+
+            FROM equipement e
+
+            INNER JOIN categorie_equipement c
+                ON e.id_categorie = c.id_categorie
+
+            WHERE e.quantite_stock <= e.seuil_alerte
+
+            ORDER BY e.quantite_stock ASC";
+
+    $stmt = $this->pdo->query($sql);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

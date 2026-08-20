@@ -9,6 +9,11 @@
 <body>
 
     <h1>Liste des équipements</h1>
+    <a href="index.php?action=stock-alerts">
+    Voir les alertes de stock
+</a>
+
+<br><br>
     <a href="index.php?action=locations">
     Gestion des locations
 </a>
@@ -43,6 +48,7 @@
         <th>Prix / jour</th>
         <th>Stock</th>
         <th>Seuil d'alerte</th>
+        <th>Alerte stock</th>
         <th>État</th>
         <th>Actions</th>
     </tr>
@@ -113,7 +119,23 @@
             <?= htmlspecialchars($equipement['seuil_alerte']) ?>
         </td>
 
+<td>
 
+    <?php if (
+        (int) $equipement['quantite_stock']
+        <=
+        (int) $equipement['seuil_alerte']
+    ): ?>
+
+        Stock faible
+
+    <?php else: ?>
+
+        Stock suffisant
+
+    <?php endif; ?>
+
+</td>
         <!-- État -->
         <td>
             <?= htmlspecialchars($equipement['etat']) ?>

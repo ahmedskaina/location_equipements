@@ -73,7 +73,10 @@ switch ($action) {
         break; 
     case 'return-location':
         $locationController->returnEquipment();
-        break;       
+        break; 
+    case 'stock-alerts':
+        $equipementController->alerts();
+        break;          
     default:
         echo "Page introuvable.";
         break;
