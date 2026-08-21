@@ -326,4 +326,42 @@ public function alerts(): void
     require __DIR__
         . '/../views/equipements/alerts.php';
 }
+public function search(): void
+{
+    $categories = $this->model->getCategories();
+
+    $nom = trim($_GET['nom'] ?? '');
+
+    $idCategorie =
+        (int) ($_GET['id_categorie'] ?? 0);
+
+    $etat =
+        $_GET['etat'] ?? '';
+
+    $prixMax = null;
+
+    if (
+        isset($_GET['prix_max'])
+        && $_GET['prix_max'] !== ''
+    ) {
+        $prixMax =
+            (float) $_GET['prix_max'];
+    }
+
+    $stockDisponible =
+        isset($_GET['stock_disponible'])
+        && $_GET['stock_disponible'] === '1';
+
+
+    $equipements = $this->model->search(
+        $nom,
+        $idCategorie,
+        $etat,
+        $prixMax,
+        $stockDisponible
+    );
+
+    require __DIR__
+        . '/../views/equipements/search.php';
+}
 }

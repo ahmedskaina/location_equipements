@@ -76,7 +76,10 @@ switch ($action) {
         break; 
     case 'stock-alerts':
         $equipementController->alerts();
-        break;          
+        break;  
+    case 'search-equipements':
+        $equipementController->search();
+        break;
     default:
         echo "Page introuvable.";
         break;

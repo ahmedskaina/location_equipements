@@ -9,6 +9,11 @@
 <body>
 
     <h1>Liste des équipements</h1>
+    <a href="index.php?action=search-equipements">
+    Recherche multicritère
+</a>
+
+<br><br>
     <a href="index.php?action=stock-alerts">
     Voir les alertes de stock
 </a>

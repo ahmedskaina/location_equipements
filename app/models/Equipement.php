@@ -193,4 +193,81 @@ public function getStocksFaibles(): array
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function search(
+    string $nom,
+    int $idCategorie,
+    string $etat,
+    ?float $prixMax,
+    bool $stockDisponible
+): array {
+
+    $sql = "SELECT
+                e.id_equipement,
+                e.nom,
+                e.reference,
+                e.description,
+                e.prix_journalier,
+                e.quantite_stock,
+                e.seuil_alerte,
+                e.etat,
+                e.image,
+                c.nom AS nom_categorie
+
+            FROM equipement e
+
+            INNER JOIN categorie_equipement c
+                ON e.id_categorie = c.id_categorie
+
+            WHERE 1 = 1";
+
+    $params = [];
+
+
+    if ($nom !== '') {
+
+        $sql .= " AND e.nom LIKE :nom";
+
+        $params[':nom'] = '%' . $nom . '%';
+    }
+
+
+    if ($idCategorie > 0) {
+
+        $sql .= " AND e.id_categorie = :id_categorie";
+
+        $params[':id_categorie'] = $idCategorie;
+    }
+
+
+    if ($etat !== '') {
+
+        $sql .= " AND e.etat = :etat";
+
+        $params[':etat'] = $etat;
+    }
+
+
+    if ($prixMax !== null && $prixMax > 0) {
+
+        $sql .= " AND e.prix_journalier <= :prix_max";
+
+        $params[':prix_max'] = $prixMax;
+    }
+
+
+    if ($stockDisponible) {
+
+        $sql .= " AND e.quantite_stock > 0";
+    }
+
+
+    $sql .= " ORDER BY e.nom ASC";
+
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
