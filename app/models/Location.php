@@ -213,4 +213,38 @@ public function terminerAvecFrais(
         ':id' => $id
     ]);
 }
+public function update(
+    int $id,
+    string $dateDebut,
+    string $dateFin,
+    int $duree,
+    int $quantite,
+    float $prixTotal,
+    int $idClient,
+    int $idEquipement
+): bool {
+
+    $sql = "UPDATE location
+            SET date_debut = :date_debut,
+                date_fin = :date_fin,
+                duree = :duree,
+                quantite = :quantite,
+                prix_total = :prix_total,
+                id_client = :id_client,
+                id_equipement = :id_equipement
+            WHERE id_location = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':date_debut' => $dateDebut,
+        ':date_fin' => $dateFin,
+        ':duree' => $duree,
+        ':quantite' => $quantite,
+        ':prix_total' => $prixTotal,
+        ':id_client' => $idClient,
+        ':id_equipement' => $idEquipement,
+        ':id' => $id
+    ]);
+}
 }

@@ -80,6 +80,9 @@ switch ($action) {
     case 'search-equipements':
         $equipementController->search();
         break;
+    case 'edit-location':
+       $locationController->edit();
+       break;
     default:
         echo "Page introuvable.";
         break;

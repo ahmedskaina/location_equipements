@@ -111,6 +111,13 @@
               <td>
 
     <?php if ($location['statut'] === 'EN_ATTENTE'): ?>
+        <a
+    href="index.php?action=edit-location&id=<?= $location['id_location'] ?>"
+>
+    Modifier
+</a>
+
+|
 
         <a
             href="index.php?action=validate-location&id=<?= $location['id_location'] ?>"
