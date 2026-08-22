@@ -111,13 +111,12 @@
               <td>
 
     <?php if ($location['statut'] === 'EN_ATTENTE'): ?>
-        <a
-    href="index.php?action=edit-location&id=<?= $location['id_location'] ?>"
->
-    Modifier
-</a>
 
-|
+        <a href="index.php?action=edit-location&id=<?= $location['id_location'] ?>">
+            Modifier
+        </a>
+
+        |
 
         <a
             href="index.php?action=validate-location&id=<?= $location['id_location'] ?>"
@@ -135,6 +134,16 @@
             Refuser
         </a>
 
+        |
+
+        <a
+            href="index.php?action=delete-location&id=<?= $location['id_location'] ?>"
+            onclick="return confirm('Voulez-vous vraiment supprimer cette demande ?');"
+        >
+            Supprimer
+        </a>
+
+
     <?php elseif ($location['statut'] === 'VALIDEE'): ?>
 
         <a
@@ -144,13 +153,23 @@
             Démarrer
         </a>
 
+
     <?php elseif ($location['statut'] === 'EN_COURS'): ?>
 
-        <a
-            href="index.php?action=return-location&id=<?= $location['id_location'] ?>"
-        >
+        <a href="index.php?action=return-location&id=<?= $location['id_location'] ?>">
             Enregistrer le retour
         </a>
+
+
+    <?php elseif ($location['statut'] === 'REFUSEE'): ?>
+
+        <a
+            href="index.php?action=delete-location&id=<?= $location['id_location'] ?>"
+            onclick="return confirm('Voulez-vous vraiment supprimer cette demande refusée ?');"
+        >
+            Supprimer
+        </a>
+
 
     <?php else: ?>
 

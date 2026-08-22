@@ -530,4 +530,41 @@ public function edit(): void
     require __DIR__
         . '/../views/locations/edit.php';
 }
+public function delete(): void
+{
+    $id = (int) ($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die("Identifiant invalide.");
+    }
+
+    $location = $this->model->getById($id);
+
+    if (!$location) {
+        die("Location introuvable.");
+    }
+
+    $statutsSupprimables = [
+        'EN_ATTENTE',
+        'REFUSEE'
+    ];
+
+    if (!in_array(
+        $location['statut'],
+        $statutsSupprimables,
+        true
+    )) {
+        die(
+            "Cette location ne peut pas être supprimée."
+        );
+    }
+
+    $this->model->delete($id);
+
+    header(
+        'Location: index.php?action=locations'
+    );
+
+    exit;
+}
 }

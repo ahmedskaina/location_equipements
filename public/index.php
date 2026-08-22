@@ -83,6 +83,9 @@ switch ($action) {
     case 'edit-location':
        $locationController->edit();
        break;
+    case 'delete-location':
+       $locationController->delete();
+       break;   
     default:
         echo "Page introuvable.";
         break;
