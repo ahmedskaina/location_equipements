@@ -10,6 +10,7 @@ require_once __DIR__ . '/../app/controllers/UtilisateurController.php';
 require_once __DIR__ . '/../app/controllers/LocationController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/ClientController.php';
+require_once __DIR__ . '/../app/controllers/DashboardController.php';
 
 $authController = new AuthController($pdo);
 $categorieController = new CategorieController($pdo);
@@ -17,6 +18,7 @@ $equipementController = new EquipementController($pdo);
 $utilisateurController = new UtilisateurController($pdo);
 $locationController = new LocationController($pdo);
 $clientController = new ClientController($pdo);
+$dashboardController = new DashboardController($pdo);
 
 $action = $_GET['action'] ?? 'categories';
 
@@ -276,6 +278,16 @@ case 'stock-alerts':
     ]);
 
     $clientController->myLocations();
+
+    break;
+    case 'dashboard':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE',
+        'AGENT_LOCATION'
+    ]);
+
+    $dashboardController->index();
 
     break;
     
