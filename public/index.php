@@ -9,13 +9,14 @@ require_once __DIR__ . '/../app/controllers/EquipementController.php';
 require_once __DIR__ . '/../app/controllers/UtilisateurController.php';
 require_once __DIR__ . '/../app/controllers/LocationController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
-
+require_once __DIR__ . '/../app/controllers/ClientController.php';
 
 $authController = new AuthController($pdo);
 $categorieController = new CategorieController($pdo);
 $equipementController = new EquipementController($pdo);
 $utilisateurController = new UtilisateurController($pdo);
 $locationController = new LocationController($pdo);
+$clientController = new ClientController($pdo);
 
 $action = $_GET['action'] ?? 'categories';
 
@@ -256,10 +257,10 @@ case 'stock-alerts':
         'CLIENT'
     ]);
 
-    require __DIR__
-        . '/../app/views/client/home.php';
+    $clientController->home();
 
-    break; 
+    break;
+    
     default:
         echo "Page introuvable.";
         break;

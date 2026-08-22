@@ -270,4 +270,31 @@ public function search(
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function getDisponibles(): array
+{
+    $sql = "SELECT
+                e.id_equipement,
+                e.nom,
+                e.reference,
+                e.description,
+                e.prix_journalier,
+                e.quantite_stock,
+                e.etat,
+                e.image,
+                c.nom AS nom_categorie
+
+            FROM equipement e
+
+            INNER JOIN categorie_equipement c
+                ON e.id_categorie = c.id_categorie
+
+            WHERE e.etat = 'DISPONIBLE'
+            AND e.quantite_stock > 0
+
+            ORDER BY e.nom ASC";
+
+    $stmt = $this->pdo->query($sql);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
