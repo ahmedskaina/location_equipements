@@ -260,6 +260,24 @@ case 'stock-alerts':
     $clientController->home();
 
     break;
+    case 'client-location-create':
+
+    requireRole([
+        'CLIENT'
+    ]);
+
+    $clientController->createLocation();
+
+    break;
+    case 'client-my-locations':
+
+    requireRole([
+        'CLIENT'
+    ]);
+
+    $clientController->myLocations();
+
+    break;
     
     default:
         echo "Page introuvable.";

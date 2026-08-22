@@ -258,4 +258,37 @@ public function delete(int $id): bool
         ':id' => $id
     ]);
 }
+public function getByClient(int $idClient): array
+{
+    $sql = "SELECT
+                l.id_location,
+                l.date_debut,
+                l.date_fin,
+                l.duree,
+                l.quantite,
+                l.prix_total,
+                l.frais_additionnels,
+                l.statut,
+                l.date_demande,
+
+                e.nom AS equipement_nom,
+                e.reference AS equipement_reference
+
+            FROM location l
+
+            INNER JOIN equipement e
+                ON l.id_equipement = e.id_equipement
+
+            WHERE l.id_client = :id_client
+
+            ORDER BY l.id_location DESC";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':id_client' => $idClient
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

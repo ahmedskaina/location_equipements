@@ -25,6 +25,12 @@
     ) ?>
 </p>
 
+<a href="index.php?action=client-my-locations">
+    Mes locations
+</a>
+
+|
+
 <a href="index.php?action=logout">
     Déconnexion
 </a>
@@ -133,6 +139,9 @@
 
                     Disponible
                 </p>
+                <a href="index.php?action=client-location-create&id=<?= $equipement['id_equipement'] ?>">
+    Louer
+</a>
 
             </div>
 
