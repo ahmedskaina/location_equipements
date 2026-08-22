@@ -56,11 +56,28 @@ class AuthController
                     'role' => $utilisateur['role']
                 ];
 
-                header(
-                    'Location: index.php?action=equipements'
-                );
+               $role = $utilisateur['role'];
 
-                exit;
+if ($role === 'RESPONSABLE_INVENTAIRE') {
+
+    header(
+        'Location: index.php?action=equipements'
+    );
+
+} elseif ($role === 'AGENT_LOCATION') {
+
+    header(
+        'Location: index.php?action=locations'
+    );
+
+} else {
+
+    header(
+        'Location: index.php?action=client-home'
+    );
+}
+
+exit;
             }
         }
 

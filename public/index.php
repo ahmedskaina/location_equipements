@@ -1,12 +1,15 @@
 <?php
 session_start();
+
 require_once __DIR__ . '/../config/database.php';
 
-require_once __DIR__ . '/../app/controllers/AuthController.php';
+require_once __DIR__ . '/../app/helpers/auth.php';
 require_once __DIR__ . '/../app/controllers/CategorieController.php';
 require_once __DIR__ . '/../app/controllers/EquipementController.php';
 require_once __DIR__ . '/../app/controllers/UtilisateurController.php';
 require_once __DIR__ . '/../app/controllers/LocationController.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
+
 
 $authController = new AuthController($pdo);
 $categorieController = new CategorieController($pdo);
@@ -26,75 +29,237 @@ switch ($action) {
         break;
 
     case 'categories':
-        $categorieController->index();
-        break;
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $categorieController->index();
+
+    break;
 
     case 'create-category':
-        $categorieController->create();
-        break;
 
-    case 'edit-category':
-        $categorieController->edit();
-        break;
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
 
-    case 'delete-category':
-        $categorieController->delete();
-        break;
+    $categorieController->create();
+
+    break;
+
+
+case 'edit-category':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $categorieController->edit();
+
+    break;
+
+
+case 'delete-category':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $categorieController->delete();
+
+    break;
 
     case 'equipements':
-        $equipementController->index();
-        break;
-    case 'create-equipement':
-        $equipementController->create();
-        break;
-    case 'edit-equipement':
-        $equipementController->edit();
-        break;
-    case 'delete-equipement':
-        $equipementController->delete();
-        break;
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->index();
+
+    break;
+   case 'create-equipement':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->create();
+
+    break;
+
+
+case 'edit-equipement':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->edit();
+
+    break;
+
+
+case 'delete-equipement':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->delete();
+
+    break;
     case 'utilisateurs':
-        $utilisateurController->index();
-        break;
-    case 'create-utilisateur':
-        $utilisateurController->create();
-        break;
-    case 'edit-utilisateur':
-        $utilisateurController->edit();
-        break;
-    case 'delete-utilisateur':
-        $utilisateurController->delete();
-        break;
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $utilisateurController->index();
+
+    break;
+
+
+case 'create-utilisateur':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $utilisateurController->create();
+
+    break;
+
+
+case 'edit-utilisateur':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $utilisateurController->edit();
+
+    break;
+
+
+case 'delete-utilisateur':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $utilisateurController->delete();
+
+    break;
     case 'locations':
-        $locationController->index();
-        break; 
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->index();
+
+    break;
     case 'create-location':
-        $locationController->create();
-        break;
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->create();
+
+    break;
     case 'validate-location':
-        $locationController->validate();
-        break;
-    case 'refuse-location':
-        $locationController->refuse();
-        break;   
-    case 'start-location':
-        $locationController->start();
-        break; 
-    case 'return-location':
-        $locationController->returnEquipment();
-        break; 
-    case 'stock-alerts':
-        $equipementController->alerts();
-        break;  
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->validate();
+
+    break;
+
+
+case 'refuse-location':
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->refuse();
+
+    break;
+
+
+case 'start-location':
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->start();
+
+    break;
+
+
+case 'return-location':
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->returnEquipment();
+
+    break;
     case 'search-equipements':
-        $equipementController->search();
-        break;
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->search();
+
+    break;
+
+
+case 'stock-alerts':
+
+    requireRole([
+        'RESPONSABLE_INVENTAIRE'
+    ]);
+
+    $equipementController->alerts();
+
+    break;
     case 'edit-location':
-       $locationController->edit();
-       break;
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->edit();
+
+    break;
     case 'delete-location':
-       $locationController->delete();
-       break;   
+
+    requireRole([
+        'AGENT_LOCATION'
+    ]);
+
+    $locationController->delete();
+
+    break; 
+    case 'client-home':
+
+    requireRole([
+        'CLIENT'
+    ]);
+
+    require __DIR__
+        . '/../app/views/client/home.php';
+
+    break; 
     default:
         echo "Page introuvable.";
         break;
