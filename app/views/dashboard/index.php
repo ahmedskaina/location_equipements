@@ -4,124 +4,118 @@
 /** @var int $nombreClients */
 /** @var int $locationsEnAttente */
 /** @var int $stocksFaibles */
+
+require __DIR__
+    . '/../layouts/backoffice-header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Tableau de bord</title>
-</head>
+<div class="topbar">
 
-<body>
+    <div>
 
-<h1>Tableau de bord</h1>
+        <h1>
+            Tableau de bord
+        </h1>
 
-<p>
-    Bienvenue
-    <?= htmlspecialchars(
-        $_SESSION['utilisateur']['prenom']
-    ) ?>
+    </div>
 
-    <?= htmlspecialchars(
-        $_SESSION['utilisateur']['nom']
-    ) ?>
 
-    -
-    <?= htmlspecialchars(
-        $_SESSION['utilisateur']['role']
-    ) ?>
-</p>
+    <div class="user-info">
 
-<hr>
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['prenom']
+        ) ?>
 
-<h2>Statistiques</h2>
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['nom']
+        ) ?>
 
-<div>
+        -
 
-    <p>
-        <strong>Équipements :</strong>
-        <?= $nombreEquipements ?>
-    </p>
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['role']
+        ) ?>
 
-    <p>
-        <strong>Catégories :</strong>
-        <?= $nombreCategories ?>
-    </p>
-
-    <p>
-        <strong>Clients :</strong>
-        <?= $nombreClients ?>
-    </p>
-
-    <p>
-        <strong>Locations en attente :</strong>
-        <?= $locationsEnAttente ?>
-    </p>
-
-    <p>
-        <strong>Stocks faibles :</strong>
-        <?= $stocksFaibles ?>
-    </p>
+    </div>
 
 </div>
 
-<hr>
 
-<h2>Navigation</h2>
-
-<?php if (
-    $_SESSION['utilisateur']['role']
-    === 'RESPONSABLE_INVENTAIRE'
-): ?>
-
-    <a href="index.php?action=equipements">
-        Gestion des équipements
-    </a>
-
-    <br><br>
-
-    <a href="index.php?action=categories">
-        Gestion des catégories
-    </a>
-
-    <br><br>
-
-    <a href="index.php?action=utilisateurs">
-        Gestion des utilisateurs
-    </a>
-
-    <br><br>
-
-    <a href="index.php?action=stock-alerts">
-        Alertes de stock
-    </a>
-
-    <br><br>
-
-    <a href="index.php?action=search-equipements">
-        Recherche multicritère
-    </a>
+<div class="cards">
 
 
-<?php elseif (
-    $_SESSION['utilisateur']['role']
-    === 'AGENT_LOCATION'
-): ?>
+    <div class="card">
 
-    <a href="index.php?action=locations">
-        Gestion des locations
-    </a>
+        <h3>
+            Équipements
+        </h3>
 
-<?php endif; ?>
+        <div class="number">
+            <?= $nombreEquipements ?>
+        </div>
 
-<br><br>
+    </div>
 
-<a href="index.php?action=logout">
-    Déconnexion
-</a>
 
-</body>
+    <div class="card">
 
-</html>
+        <h3>
+            Catégories
+        </h3>
+
+        <div class="number">
+            <?= $nombreCategories ?>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Clients
+        </h3>
+
+        <div class="number">
+            <?= $nombreClients ?>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Locations en attente
+        </h3>
+
+        <div class="number">
+            <?= $locationsEnAttente ?>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Stocks faibles
+        </h3>
+
+        <div class="number">
+            <?= $stocksFaibles ?>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<?php
+
+require __DIR__
+    . '/../layouts/backoffice-footer.php';
+
+?>
