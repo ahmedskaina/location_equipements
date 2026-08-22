@@ -7,7 +7,30 @@
 </head>
 
 <body>
+<?php if (isset($_SESSION['utilisateur'])): ?>
 
+    <p>
+        Connecté :
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['prenom']
+        ) ?>
+
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['nom']
+        ) ?>
+
+        -
+
+        <?= htmlspecialchars(
+            $_SESSION['utilisateur']['role']
+        ) ?>
+    </p>
+<a href="index.php?action=logout">
+    Déconnexion
+</a>
+
+<br><br>
+<?php endif; ?>
     <h1>Liste des équipements</h1>
     <a href="index.php?action=search-equipements">
     Recherche multicritère

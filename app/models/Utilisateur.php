@@ -156,4 +156,18 @@ public function delete(int $id): bool
         ':id' => $id
     ]);
 }
+public function findByEmail(string $email): array|false
+{
+    $sql = "SELECT *
+            FROM utilisateur
+            WHERE email = :email";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->execute([
+        ':email' => $email
+    ]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 }
